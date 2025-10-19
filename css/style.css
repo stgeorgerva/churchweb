@@ -38,7 +38,7 @@ body {
 }
 .hero-section {
   background-color: #fdf2e9;
-  padding: 9.6rem 0;
+  padding: 3.6rem 0;
 }
 .hero {
   max-width: 130rem;
@@ -148,7 +148,7 @@ body {
   align-items: center;
 }
 .about-us {
-  padding: 9.6rem 0;
+  padding: 4.6rem 0;
 }
 .subheading {
   display: block;
@@ -178,7 +178,7 @@ body {
 .heading-secondary {
   font-size: 4.4rem;
   line-height: 1.2;
-  margin-bottom: 9.6rem;
+  margin-bottom: 3.6rem;
 }
 
 .heading-tertiary {
@@ -193,7 +193,13 @@ body {
   margin-bottom: 1.6rem;
 }
 .about-us-img {
-  max-width: 100%;
+  max-width: 90%;
+}
+.about-us-subheading {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.6rem;
 }
 .contact-info-container {
   display: flex;
@@ -207,7 +213,7 @@ body {
   background-color: #fdf2e9;
 }
 .events-leftsection {
-  padding: 9.6rem 0 0 0;
+  padding: 4.6rem 0 0 0;
 }
 .gallery {
   padding: 1.6rem;
@@ -242,14 +248,28 @@ body {
   margin-bottom: 1.6rem;
 }
 .connect-section {
-  padding: 9.6rem 0;
+  padding: 4.6rem 0;
 }
 .give-section {
-  padding: 9.6rem 0;
+  padding: 4.6rem 0;
 }
 .connect-grid {
   align-items: start;
   justify-items: center;
+}
+.connect-main {
+  display: flex;
+  gap: 3.2rem;
+}
+.connect-main-bold a{
+  text-decoration: none;
+  font-size: 1.8em;
+   color: #79004a;
+}
+connect-main-bold {
+  font-weight: 600;
+  font-size: 1.8em;
+  color: #79004a;
 }
 .address {
   font-size: 1.8rem;
@@ -268,7 +288,7 @@ body {
 .address-heading {
   display: inline-block;
   padding: 0.5rem 2rem;
-  background-color: rgb(23, 177, 23);
+  background-color: rgb(177, 23, 23);
   color: #fff;
 }
 .address-links:link,
@@ -413,6 +433,7 @@ body {
 .social-links {
   list-style: none;
   display: flex;
+  flex-direction: column;
   gap: 2.4rem;
 }
 
@@ -439,3 +460,179 @@ body {
   text-align: center;
   line-height: 1.6;
 }
+/* Timeline Container */
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 10px 0;
+        }
+
+        /* The vertical line/ruler */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #ccaaa3; /* Light Green */
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            z-index: 1;
+        }
+
+        /* Timeline Event Container */
+        .event-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            box-sizing: border-box;
+            z-index: 2; /* Ensure content is above the line */
+        }
+
+        /* Put the event-containers on the left side */
+        .left {
+            left: 0;
+        }
+
+        /* Put the event-containers on the right side */
+        .right {
+            left: 50%;
+        }
+
+        /* Event Box (The actual content) */
+        .event-content {
+            padding: 20px 30px;
+            background-color: #ffffff;
+            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.35);
+            border-left: 5px solid #79004a; /* Accent color for the box */
+            transition: transform 0.3s ease;
+        }
+
+        .event-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        /* Date/Year Badge */
+        .date {
+            font-weight: 700;
+            font-size: 1.3em;
+            color: #79004a;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .event-content h3 {
+            color: #79004a;
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+        
+        .event-content ul {
+            padding-left: 20px;
+        }
+
+        /* Circle on the timeline */
+        .event-container::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background-color: #792400; /* Darker accent */
+            border: 4px solid #ffd990; /* Very Light Green */
+            top: 35px;
+            border-radius: 50%;
+            z-index: 3;
+        }
+
+        /* Placement of the circles */
+        .right::after {
+            left: -9px; /* Half of circle width + half of line width */
+        }
+
+        .left::after {
+            right: -9px; /* Half of circle width + half of line width */
+        }
+
+        /* Arrow pointing towards the center line */
+        /* Left side arrow */
+        .left .event-content::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 30px;
+            width: 0;
+            z-index: 1;
+            right: -10px;
+            border: medium solid white;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent white;
+        }
+
+        /* Right side arrow */
+        .right .event-content::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 30px;
+            width: 0;
+            z-index: 1;
+            left: -10px;
+            border: medium solid white;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent white transparent transparent;
+        }
+
+        /* --- MOBILE OPTIMIZATIONS (Max Width 600px) --- */
+        @media screen and (max-width: 600px) {
+            
+            body {
+                padding: 10px; /* Reduced overall padding for small screens */
+            }
+            
+            h1 {
+                font-size: 1.8rem; /* Smaller header for mobile */
+                margin-bottom: 20px;
+            }
+            
+            /* Move vertical line to the left */
+            .timeline::after {
+                left: 31px; 
+            }
+
+            .event-container {
+                width: 100%;
+                padding-left: 70px; /* Space for the line and circles */
+                padding-right: 10px; /* Reduced right padding for better fit */
+            }
+
+            /* Stack all containers to the left */
+            .right {
+                left: 0%; 
+            }
+
+            /* Adjust circle position to align with the new line position */
+            .event-container::after {
+                left: 20px; 
+                margin-left: 0;
+                top: 28px;
+                z-index: 10;
+            }
+
+            /* Adjust arrows for single column view (all pointing right/inward) */
+            .right .event-content::before,
+            .left .event-content::before {
+                left: -10px;
+                right: auto;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent white transparent transparent;
+            }
+
+            .event-content {
+                border-left: none; /* Remove side border */
+                border-top: 5px solid #79004a; /* Add top border for accent */
+            }

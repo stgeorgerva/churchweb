@@ -358,6 +358,10 @@
     margin-top: 4.8rem;
     padding-top: 2.4rem;
   }
+  .connect-main {
+    flex-direction: column;
+    gap: 1.6rem;
+  }
 }
 
 /* 
