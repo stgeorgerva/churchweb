@@ -266,7 +266,8 @@
   }
 
   .hero-img {
-    width: 80%;
+    display: none;
+    /* width: 80%; */
   }
 
   .logos img {
