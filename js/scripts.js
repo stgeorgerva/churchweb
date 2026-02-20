@@ -73,3 +73,89 @@ allLinks.forEach(function (link) {
     }
   });
 });
+
+//////////////////////////////////////////////////////////
+// Photo Gallery Overlay
+const galleryItems = document.querySelectorAll('.gallery-grid .gallery-item');
+const photoOverlay = document.querySelector('.photo-overlay');
+const overlayImage = document.querySelector('.overlay-image');
+const overlayDescription = document.querySelector('.overlay-description');
+const overlayClose = document.querySelector('.overlay-close');
+const overlayPrev = document.querySelector('.overlay-prev');
+const overlayNext = document.querySelector('.overlay-next');
+
+let currentImageIndex = 0;
+const images = Array.from(galleryItems).map(item => item.querySelector('img').src);
+
+// Open overlay when gallery item is clicked
+galleryItems.forEach((item, index) => {
+  item.addEventListener('click', function() {
+    currentImageIndex = index;
+    showOverlay();
+  });
+});
+
+// Close overlay
+overlayClose.addEventListener('click', hideOverlay);
+photoOverlay.addEventListener('click', function(e) {
+  if (e.target === photoOverlay) {
+    hideOverlay();
+  }
+});
+
+// Navigation
+overlayPrev.addEventListener('click', showPreviousImage);
+overlayNext.addEventListener('click', showNextImage);
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+  if (!photoOverlay.classList.contains('active')) return;
+  
+  if (e.key === 'Escape') hideOverlay();
+  if (e.key === 'ArrowLeft') showPreviousImage();
+  if (e.key === 'ArrowRight') showNextImage();
+});
+
+function showOverlay() {
+  const currentItem = galleryItems[currentImageIndex];
+  
+  // Update image
+  overlayImage.src = images[currentImageIndex];
+  overlayImage.alt = currentItem.querySelector('img').alt;
+  
+  // Update description
+  overlayDescription.textContent = currentItem.dataset.description || '';
+  
+  photoOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function hideOverlay() {
+  photoOverlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function showPreviousImage() {
+  currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+  updateOverlayImage();
+}
+
+function showNextImage() {
+  currentImageIndex = (currentImageIndex + 1) % images.length;
+  updateOverlayImage();
+}
+
+function updateOverlayImage() {
+  const currentItem = galleryItems[currentImageIndex];
+  
+  // Update image with fade effect
+  overlayImage.style.opacity = '0';
+  setTimeout(() => {
+    overlayImage.src = images[currentImageIndex];
+    overlayImage.alt = currentItem.querySelector('img').alt;
+    overlayImage.style.opacity = '1';
+  }, 150);
+  
+  // Update description
+  overlayDescription.textContent = currentItem.dataset.description || '';
+}
