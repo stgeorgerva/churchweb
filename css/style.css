@@ -493,7 +493,16 @@ body {
 }
 
 /* Hide additional gallery items from main view */
-.gallery-grid .gallery-item[data-index]:not([data-index="0"]):not([data-index="1"]):not([data-index="2"]):not([data-index="3"]):not([data-index="4"]):not([data-index="5"]):not([data-index="6"]):not([data-index="7"]):not([data-index="8"]) {
+.gallery-grid .gallery-item[data-index="9"],
+.gallery-grid .gallery-item[data-index="10"],
+.gallery-grid .gallery-item[data-index="11"],
+.gallery-grid .gallery-item[data-index="12"],
+.gallery-grid .gallery-item[data-index="13"],
+.gallery-grid .gallery-item[data-index="14"],
+.gallery-grid .gallery-item[data-index="15"],
+.gallery-grid .gallery-item[data-index="16"],
+.gallery-grid .gallery-item[data-index="17"],
+.gallery-grid .gallery-item[data-index="18"] {
   display: none;
 }
 .sunday-service img {
