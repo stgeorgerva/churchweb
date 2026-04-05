@@ -61,7 +61,20 @@
             <a href="#connect" class="hero-link"> Connect With Us</a>
           </div>
           <div class="hero-img">
-            <img src="img/main-img.png" class="hero-image" />
+            <div class="carousel-container">
+              <div class="carousel-slide active">
+                <img src="img/main-img.png" class="hero-image" alt="Church Hero" />
+              </div>
+              <div class="carousel-slide">
+                <img src="img/HolyWeek.jpeg" class="hero-image" alt="Bishop Visit" />
+              </div>
+            </div>
+            <button class="carousel-prev" aria-label="Previous image">
+              <ion-icon name="chevron-back-outline"></ion-icon>
+            </button>
+            <button class="carousel-next" aria-label="Next image">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </button>
           </div>
         </div>
       </section>
@@ -552,6 +565,7 @@
                   >
                     Full Passion Week Liturgy
                   </a>
+                  
                   <span class="resource-description"
                     >Holy Week prayers, liturgies, and worship materials</span
                   >

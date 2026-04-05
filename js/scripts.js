@@ -5,6 +5,78 @@ const currentYear = new Date().getFullYear();
 yearEl.textContent = currentYear;
 
 ///////////////////////////////////////////////////////////
+// Hero Carousel
+const slides = document.querySelectorAll('.carousel-slide');
+const prevBtn = document.querySelector('.carousel-prev');
+const nextBtn = document.querySelector('.carousel-next');
+let currentSlide = 0;
+const totalSlides = slides.length;
+let autoTransition = true; // Flag for auto-transition
+
+function showSlide(index) {
+  // Hide all slides
+  slides.forEach(slide => slide.classList.remove('active'));
+  
+  // Show current slide
+  slides[index].classList.add('active');
+  currentSlide = index;
+}
+
+function nextSlide() {
+  currentSlide = (currentSlide + 1) % totalSlides;
+  showSlide(currentSlide);
+}
+
+function prevSlide() {
+  currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+  showSlide(currentSlide);
+}
+
+// Auto-advance carousel every 3 seconds
+let autoInterval = setInterval(nextSlide, 3000);
+
+// Manual navigation
+prevBtn.addEventListener('click', () => {
+  autoTransition = false; // Stop auto-transition
+  clearInterval(autoInterval); // Clear the interval
+  prevSlide();
+});
+
+nextBtn.addEventListener('click', () => {
+  autoTransition = false; // Stop auto-transition
+  clearInterval(autoInterval); // Clear the interval
+  nextSlide();
+});
+
+// Resume auto-transition when user stops interacting
+const resumeAutoTransition = () => {
+  if (!autoTransition) {
+    autoTransition = true;
+    autoInterval = setInterval(nextSlide, 3000);
+  }
+};
+
+// Resume auto-transition after 10 seconds of inactivity
+let inactivityTimer;
+const resetInactivityTimer = () => {
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(resumeAutoTransition, 10000);
+};
+
+// Detect user interaction with carousel
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.carousel-container')) {
+    resetInactivityTimer();
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    resetInactivityTimer();
+  }
+});
+
+///////////////////////////////////////////////////////////
 // Mobile navigation
 const btnNavEl = document.querySelector(".btn-mobile-nav");
 const headerEl = document.querySelector(".header");
@@ -36,7 +108,7 @@ const obs = new IntersectionObserver(
     root: null,
     threshold: 0,
     rootMargin: "-80px",
-  }
+  },
 );
 obs.observe(sectionHeroEl);
 
@@ -66,10 +138,10 @@ allLinks.forEach(function (link) {
       e.preventDefault();
       const sectionEl = document.querySelector(href);
       sectionEl.scrollIntoView({ behavior: "smooth" });
-      
+
       // Update URL with anchor link
       const newUrl = `${window.location.origin}${window.location.pathname}${href}`;
-      window.history.pushState({ section: href.slice(1) }, '', newUrl);
+      window.history.pushState({ section: href.slice(1) }, "", newUrl);
     }
 
     // Close mobile naviagtion
@@ -81,63 +153,65 @@ allLinks.forEach(function (link) {
 
 //////////////////////////////////////////////////////////
 // Photo Gallery Overlay
-const galleryItems = document.querySelectorAll('.gallery-grid .gallery-item');
-const photoOverlay = document.querySelector('.photo-overlay');
-const overlayImage = document.querySelector('.overlay-image');
-const overlayDescription = document.querySelector('.overlay-description');
-const overlayClose = document.querySelector('.overlay-close');
-const overlayPrev = document.querySelector('.overlay-prev');
-const overlayNext = document.querySelector('.overlay-next');
+const galleryItems = document.querySelectorAll(".gallery-grid .gallery-item");
+const photoOverlay = document.querySelector(".photo-overlay");
+const overlayImage = document.querySelector(".overlay-image");
+const overlayDescription = document.querySelector(".overlay-description");
+const overlayClose = document.querySelector(".overlay-close");
+const overlayPrev = document.querySelector(".overlay-prev");
+const overlayNext = document.querySelector(".overlay-next");
 
 let currentImageIndex = 0;
-const images = Array.from(galleryItems).map(item => item.querySelector('img').src);
+const images = Array.from(galleryItems).map(
+  (item) => item.querySelector("img").src,
+);
 
 // Open overlay when gallery item is clicked
 galleryItems.forEach((item, index) => {
-  item.addEventListener('click', function() {
+  item.addEventListener("click", function () {
     currentImageIndex = index;
     showOverlay();
   });
 });
 
 // Close overlay
-overlayClose.addEventListener('click', hideOverlay);
-photoOverlay.addEventListener('click', function(e) {
+overlayClose.addEventListener("click", hideOverlay);
+photoOverlay.addEventListener("click", function (e) {
   if (e.target === photoOverlay) {
     hideOverlay();
   }
 });
 
 // Navigation
-overlayPrev.addEventListener('click', showPreviousImage);
-overlayNext.addEventListener('click', showNextImage);
+overlayPrev.addEventListener("click", showPreviousImage);
+overlayNext.addEventListener("click", showNextImage);
 
 // Keyboard navigation
-document.addEventListener('keydown', function(e) {
-  if (!photoOverlay.classList.contains('active')) return;
-  
-  if (e.key === 'Escape') hideOverlay();
-  if (e.key === 'ArrowLeft') showPreviousImage();
-  if (e.key === 'ArrowRight') showNextImage();
+document.addEventListener("keydown", function (e) {
+  if (!photoOverlay.classList.contains("active")) return;
+
+  if (e.key === "Escape") hideOverlay();
+  if (e.key === "ArrowLeft") showPreviousImage();
+  if (e.key === "ArrowRight") showNextImage();
 });
 
 function showOverlay() {
   const currentItem = galleryItems[currentImageIndex];
-  
+
   // Update image
   overlayImage.src = images[currentImageIndex];
-  overlayImage.alt = currentItem.querySelector('img').alt;
-  
+  overlayImage.alt = currentItem.querySelector("img").alt;
+
   // Update description
-  overlayDescription.textContent = currentItem.dataset.description || '';
-  
-  photoOverlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
+  overlayDescription.textContent = currentItem.dataset.description || "";
+
+  photoOverlay.classList.add("active");
+  document.body.style.overflow = "hidden";
 }
 
 function hideOverlay() {
-  photoOverlay.classList.remove('active');
-  document.body.style.overflow = '';
+  photoOverlay.classList.remove("active");
+  document.body.style.overflow = "";
 }
 
 function showPreviousImage() {
@@ -152,15 +226,15 @@ function showNextImage() {
 
 function updateOverlayImage() {
   const currentItem = galleryItems[currentImageIndex];
-  
+
   // Update image with fade effect
-  overlayImage.style.opacity = '0';
+  overlayImage.style.opacity = "0";
   setTimeout(() => {
     overlayImage.src = images[currentImageIndex];
-    overlayImage.alt = currentItem.querySelector('img').alt;
-    overlayImage.style.opacity = '1';
+    overlayImage.alt = currentItem.querySelector("img").alt;
+    overlayImage.style.opacity = "1";
   }, 150);
-  
+
   // Update description
-  overlayDescription.textContent = currentItem.dataset.description || '';
+  overlayDescription.textContent = currentItem.dataset.description || "";
 }
